@@ -115,22 +115,27 @@ class TicTacToe:
             except ValueError: 
                 print("Invalid move")
 
+                
+    def game_over(self):
+        print(self.board)
+        if evaluation(self.board) != None: 
+            print("Game over!")
+            return True
+            
     def play(self):
         board = self.board                
         # Start playing vs computer
         while len(board.legal_moves()) != 0: 
 
-            self.promptMove('Player 1 Move:')
-            print(board)
+            if board.turn == 'X': self.promptMove('Player 1 Move: ')
             
+            if self.game_over(): break
             minimax(board)
+            
             print("Computer Turn: ", best_move)
             board.move(best_move[0], best_move[1])  
-            
-            print(board)
-            if evaluation(board) != None: 
-                print("Game over!", board)
-                break
+           
+            if self.game_over(): break  
                  
             
 
@@ -138,7 +143,15 @@ class TicTacToe:
 
 
 if __name__ == '__main__': # test if either run-directly or being imported
-    TicTacToe().play()    
+   game =  TicTacToe()
+   game.board.move(0,1)
+   game.board.move(2,0)
+   game.board.move(2,2)
+   game.board.move(2,1)
+   game.board.move(1,2)
+   print(game.board)
+   
+   game.play()    
 
 
 
