@@ -1,7 +1,16 @@
 import copy
 
 class Board:
-    text  =  '\n   {}  |  {}  |  {}  \n _____|_____|_____\n      |     |     \n   {}  |  {}  |  {}  \n _____|_____|_____\n      |     |     \n   {}  |  {}  |  {}  \n      |     |     \n\n'
+    # text  =  '\n   {}  |  {}  |  {}  \n _____|_____|_____\n      |     |     \n   {}  |  {}  |  {}  \n _____|_____|_____\n      |     |     \n   {}  |  {}  |  {}  \n      |     |     \n\n'
+    text = ''' 
+          {}  |  {}  |  {} 
+        _____|_____|_____
+             |     |     
+          {}  |  {}  |  {} 
+        _____|_____|_____   
+             |     |    
+          {}  |  {}  |  {} 
+             |     |     '''
 
     
     def __init__(self):
@@ -67,7 +76,7 @@ def evaluation(board):         # eval function to eval board state, only doable 
     
 
 best_move = ()
-def minimax(board : Board):      # returns the best score possible from state given opponent plays optimally
+def minimax(board):      # returns the best score possible from state given opponent plays optimally
     global best_move
     move_scores = {} 
     
@@ -89,51 +98,47 @@ def minimax(board : Board):      # returns the best score possible from state gi
     if board.turn == 'O':          # opponent wants to minimize our score as much as possible
         best_move = min(move_scores, key = move_scores.get)
         return min(move_scores.values())
+
+
     
+class TicTacToe: 
+    def __init__(self):
+        self.board = Board()
 
-board = Board()
+    def promptMove(self, prompt):
+        while True:
+            try:
+                move = input(prompt)
+                x,y = map(int, move.split())
+                self.board.move(x,y)
+                break
+            except ValueError: 
+                print("Invalid move")
 
-#  board.move(0,2)
-# board.move(0,0)
-# board.move(1,0)
-# board.move(2,2)
-# board.move(2,0)
-# board.move(2,1)
+    def play(self):
+        board = self.board                
+        # Start playing vs computer
+        while len(board.legal_moves()) != 0: 
 
-def promptMove(prompt):
-    while True:
-        try:
-            move = input(prompt)
-            x,y = map(int, move.split())
-            board.move(x,y)
-            break
-        except ValueError: 
-            print("Invalid move")
-
-def main():
-                
-    # Start playing vs computer
-    while len(board.legal_moves()) != 0: 
-
-        promptMove('Player 1 Move:')
-        print(board)
-        
-        minimax(board)
-        print("Computer Turn: ", best_move)
-        board.move(best_move[0], best_move[1])  
-        
-        print(board)
-        if evaluation(board) != None: 
-            print("Game over!", board)
-            break
-             
-        
+            self.promptMove('Player 1 Move:')
+            print(board)
+            
+            minimax(board)
+            print("Computer Turn: ", best_move)
+            board.move(best_move[0], best_move[1])  
+            
+            print(board)
+            if evaluation(board) != None: 
+                print("Game over!", board)
+                break
+                 
+            
 
 
 
 
 if __name__ == '__main__': # test if either run-directly or being imported
-    main()    
+    TicTacToe().play()    
 
 
 
