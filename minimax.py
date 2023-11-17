@@ -69,25 +69,25 @@ class Board:
                
             
 
-def evaluation(board):         # eval function to eval board state, only doable if won or draw
-    if board.isWon() and board.turn == 'O': return 10
-    elif board.isWon() and board.turn == 'X': return -10
+def evaluation(board, depth):         # eval function to eval board state, only doable if won or draw
+    if board.isWon() and board.turn == 'O': return 10 - depth
+    elif board.isWon() and board.turn == 'X': return -10 + depth
     elif len(board.legal_moves()) == 0: return 0        # draw 
     
 
 best_move = ()
-def minimax(board):      # returns the best score possible from state given opponent plays optimally
+def minimax(board, depth):      # returns the best score possible from state given opponent plays optimally
     global best_move
     move_scores = {} 
     
     
     # base case: once reached end_state (win/draw), call evaluation return score
-    if evaluation(board) != None: return evaluation(board)
+    if evaluation(board, depth) != None: return evaluation(board, depth)
 
     for x,y in board.legal_moves():
        new_state = copy.deepcopy(board)           # create new board state, recursive call
        new_state.move(x,y)
-       move_scores[(x,y)] = minimax(new_state)    # the resulting score from going thru that state
+       move_scores[(x,y)] = minimax(new_state, depth +1)    # the resulting score from going thru that state
        
     print(move_scores)
     
@@ -118,7 +118,7 @@ class TicTacToe:
                 
     def game_over(self):
         print(self.board)
-        if evaluation(self.board) != None: 
+        if evaluation(self.board, 0) != None: 
             print("Game over!")
             return True
             
@@ -130,7 +130,7 @@ class TicTacToe:
             if board.turn == 'X': self.promptMove('Player 1 Move: ')
             
             if self.game_over(): break
-            minimax(board)
+            minimax(board,0)
             
             print("Computer Turn: ", best_move)
             board.move(best_move[0], best_move[1])  
