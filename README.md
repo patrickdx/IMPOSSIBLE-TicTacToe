@@ -14,3 +14,5 @@ Essentially it recursively goes through all the potential moves at the current g
 - The game's fate is decided after the player's first move. After this, the computer has already calculated the series of moves to lead to a draw, even if player 1 plays perfectly.
 - If player X were to play `(0,0)`, then: `{(0, 1): 10, (0, 2): 10, (1, 0): 10, (1, 1): 0, (1, 2): 10, (2, 0): 10, (2, 1): 10, (2, 2): 10}`
 Computer Turn:  `(1, 1)`
+
+- To make the computer player play and challenge the player until the very end, the algorithm factors in `depth`, so the longest/game-extending moves are prioritized
