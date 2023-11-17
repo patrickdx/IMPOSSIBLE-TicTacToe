@@ -89,7 +89,7 @@ def minimax(board, depth):      # returns the best score possible from state giv
        new_state.move(x,y)
        move_scores[(x,y)] = minimax(new_state, depth +1)    # the resulting score from going thru that state
        
-    print(move_scores)
+    # print(move_scores)      to view the score results from each of the moves
     
     if board.turn == 'X':         # select the max score
         best_move = max(move_scores, key = move_scores.get)
@@ -144,12 +144,12 @@ class TicTacToe:
 
 if __name__ == '__main__': # test if either run-directly or being imported
    game =  TicTacToe()
-   game.board.move(0,1)
-   game.board.move(2,0)
-   game.board.move(2,2)
-   game.board.move(2,1)
-   game.board.move(1,2)
-   print(game.board)
+   # game.board.move(0,1)
+   # game.board.move(2,0)
+   # game.board.move(2,2)
+   # game.board.move(2,1)
+   # game.board.move(1,2)
+   # print(game.board)
    
    game.play()    
 
